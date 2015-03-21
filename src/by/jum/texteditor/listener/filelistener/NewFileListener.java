@@ -22,7 +22,6 @@ public class NewFileListener implements ActionListener {
         tabbedPane.add("untitled", myTextPane);
         tabbedPane.setSelectedComponent(myTextPane);
         tabbedPane.getSelectedComponent().requestFocusInWindow();
-
     }
 
 

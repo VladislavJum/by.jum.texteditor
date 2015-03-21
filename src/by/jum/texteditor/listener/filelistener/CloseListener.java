@@ -9,7 +9,6 @@ public class CloseListener implements ActionListener {
 
     public CloseListener(JTabbedPane tabbedPane) {
         this.tabbedPane = tabbedPane;
-
     }
 
     @Override
