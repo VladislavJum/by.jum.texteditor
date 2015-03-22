@@ -1,8 +1,8 @@
 package by.jum.texteditor.listener;
 
-import by.jum.texteditor.Symbol.Symbol;
 import by.jum.texteditor.mainwindow.Caret;
 import by.jum.texteditor.mainwindow.MyTextPane;
+import by.jum.texteditor.symbol.Symbol;
 
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -13,7 +13,7 @@ import java.awt.event.KeyListener;
 public class MyKeyListener implements KeyListener {
     private MyTextPane myTextPane;
     private String mySymbol = "";
-    private int y=10;
+    private int step = 10, symbolWight, symbolHeight;
 
     public MyKeyListener(MyTextPane myTextPane, Caret caret) {
         this.myTextPane = myTextPane;
@@ -22,22 +22,26 @@ public class MyKeyListener implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+        Font font = new Font("Calibri", Font.PLAIN, 25);
         mySymbol = String.valueOf(e.getKeyChar());
-        Symbol symbol = new Symbol(mySymbol, myTextPane);
+        // MyFont myFont = new MyFont(font.getFontName(), font.getStyle(), font.getSize());
+
+        Symbol symbol = new Symbol(mySymbol, font);
+
         myTextPane.add(symbol);
 
         Graphics2D graphics2D = (Graphics2D) symbol.getGraphics();
-        graphics2D.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+        graphics2D.setFont(font);
 
-        int symbolWight = graphics2D.getFontMetrics().stringWidth(mySymbol);
+        symbolWight = graphics2D.getFontMetrics().stringWidth(mySymbol);
+        symbolHeight = 4 + (int) font.getSize2D();
 
-        System.out.println(symbolWight);
-        symbol.setBounds(y,10,symbolWight, 40);
-        // System.out.println(y);
-        y += (4+symbolWight);
-        //System.out.println(e.getKeyChar());
-        // myTextPane.repaint();
+        symbol.setBounds(step, 10, symbolWight, symbolHeight);
 
+        step += (symbolWight);
+
+        Caret caret = myTextPane.getCaret();
+        caret.setCaretPosition(step, 10, symbolHeight);
     }
 
     @Override

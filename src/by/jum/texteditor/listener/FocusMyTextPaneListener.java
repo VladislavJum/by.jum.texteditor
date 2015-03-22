@@ -1,12 +1,12 @@
 package by.jum.texteditor.listener;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-
 public class FocusMyTextPaneListener implements MouseListener {
     private JPanel panel;
+
     public FocusMyTextPaneListener(JPanel panel) {
         this.panel = panel;
     }

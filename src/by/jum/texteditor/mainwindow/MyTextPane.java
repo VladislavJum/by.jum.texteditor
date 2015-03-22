@@ -2,8 +2,9 @@ package by.jum.texteditor.mainwindow;
 
 import by.jum.texteditor.listener.MyKeyListener;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Cursor;
 
 public class MyTextPane extends JPanel {
     private Caret caret;
@@ -21,6 +22,10 @@ public class MyTextPane extends JPanel {
         caret = new Caret();
         caret.myTimer();
         add(caret);
+    }
+
+    public Caret getCaret() {
+        return caret;
     }
 
 }

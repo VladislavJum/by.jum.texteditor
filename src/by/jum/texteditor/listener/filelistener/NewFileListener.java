@@ -3,7 +3,7 @@ package by.jum.texteditor.listener.filelistener;
 import by.jum.texteditor.mainwindow.CreateMyTextPane;
 import by.jum.texteditor.mainwindow.MyTextPane;
 
-import javax.swing.*;
+import javax.swing.JTabbedPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

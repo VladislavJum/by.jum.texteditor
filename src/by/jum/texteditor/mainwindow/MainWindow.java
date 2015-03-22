@@ -1,12 +1,31 @@
 package by.jum.texteditor.mainwindow;
 
+import by.jum.texteditor.constants.MenuName;
+import by.jum.texteditor.constants.Path;
+import by.jum.texteditor.listener.ComboBoxListener;
 import by.jum.texteditor.listener.TabbedChangeListener;
 import by.jum.texteditor.listener.filelistener.CloseListener;
 import by.jum.texteditor.listener.filelistener.NewFileListener;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JTabbedPane;
+import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Choice;
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -15,7 +34,7 @@ import java.awt.event.KeyEvent;
 
 public class MainWindow {
     private JFrame mainWindow;
-    private JComboBox comboBox;
+    private JComboBox<String> comboBox;
     private JTabbedPane tabbedPane;
 
     public MainWindow() {
@@ -24,13 +43,13 @@ public class MainWindow {
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
-        mainWindow = new JFrame("My Text Editor");
+        mainWindow = new JFrame(MenuName.TITLE);
         mainWindow.setSize(600, 600);
         mainWindow.setLayout(new BorderLayout());
         mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainWindow.setLocationRelativeTo(null);
 
-        comboBox = new JComboBox(new String[]{"Times New Roman", "Calibri"});
+        comboBox = new JComboBox<String>(MenuName.NAME_STYLES);
         comboBox.setEditable(true);
 
         tabbedPane = new JTabbedPane();
@@ -44,32 +63,33 @@ public class MainWindow {
         createToolBar();
 
         mainWindow.setVisible(true);
-       // comboBox.addActionListener(new ComboBoxListener(tabbedPane));
+        comboBox.addActionListener(new ComboBoxListener(tabbedPane));
     }
 
     void createItem() {
+
         JMenuBar mainMenu = new JMenuBar();
-        JMenu fileMenu = new JMenu("File");
-        JMenu editMenu = new JMenu("Edit");
+        JMenu fileMenu = new JMenu(MenuName.FILE);
+        JMenu editMenu = new JMenu(MenuName.EDIT);
 
         fileMenu.setMnemonic(KeyEvent.VK_F);
         editMenu.setMnemonic(KeyEvent.VK_E);
 
-        JMenuItem newFileItem = new JMenuItem("New File", KeyEvent.VK_N);
-        JMenuItem openFileItem = new JMenuItem("Open File...", KeyEvent.VK_O);
-        JMenuItem saveFileItem = new JMenuItem("Save", KeyEvent.VK_S);
-        JMenuItem saveAsFileItem = new JMenuItem("Save As...", KeyEvent.VK_A);
-        JMenuItem closeFileItem = new JMenuItem("Close File");
-        JMenuItem exitFileItem = new JMenuItem("Exit", KeyEvent.VK_E);
+        JMenuItem newFileItem = new JMenuItem(MenuName.NEW_FILE, KeyEvent.VK_N);
+        JMenuItem openFileItem = new JMenuItem(MenuName.OPEN_FILE, KeyEvent.VK_O);
+        JMenuItem saveFileItem = new JMenuItem(MenuName.SAVE_FILE, KeyEvent.VK_S);
+        JMenuItem saveAsFileItem = new JMenuItem(MenuName.SAVE_AS, KeyEvent.VK_A);
+        JMenuItem closeFileItem = new JMenuItem(MenuName.CLOSE_FILE);
+        JMenuItem exitFileItem = new JMenuItem(MenuName.EXIT, KeyEvent.VK_E);
 
-        JMenuItem copyEditItem = new JMenuItem("Copy", KeyEvent.VK_C);
-        JMenuItem cutEditItem = new JMenuItem("Cut", KeyEvent.VK_X);
-        JMenuItem pasteEditItem = new JMenuItem("Paste", KeyEvent.VK_V);
+        JMenuItem copyEditItem = new JMenuItem(MenuName.COPY, KeyEvent.VK_C);
+        JMenuItem cutEditItem = new JMenuItem(MenuName.CUT, KeyEvent.VK_X);
+        JMenuItem pasteEditItem = new JMenuItem(MenuName.PASTE, KeyEvent.VK_V);
 
-        ImageIcon openFileIcon = new ImageIcon("src\\by\\jum\\texteditor\\icons\\open.png");
-        ImageIcon copyIcon = new ImageIcon("src\\by\\jum\\texteditor\\icons\\copy.png");
-        ImageIcon cutIcon = new ImageIcon("src\\by\\jum\\texteditor\\icons\\cut.png");
-        ImageIcon pasteIcon = new ImageIcon("src\\by\\jum\\texteditor\\icons\\paste.png");
+        ImageIcon openFileIcon = new ImageIcon(Path.OPEN_ICON.getPath());
+        ImageIcon copyIcon = new ImageIcon(Path.COPY_ICON.getPath());
+        ImageIcon cutIcon = new ImageIcon(Path.CUT_ICON.getPath());
+        ImageIcon pasteIcon = new ImageIcon(Path.PASTE_ICON.getPath());
 
         copyEditItem.setIcon(copyIcon);
         cutEditItem.setIcon(cutIcon);
@@ -119,21 +139,21 @@ public class MainWindow {
     }
 
     void createToolBar() {
-        JToolBar toolBar = new JToolBar("Instruments");
+        JToolBar toolBar = new JToolBar();
         toolBar.setBackground(new Color(186, 186, 186));
         toolBar.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        JToggleButton boldButton = new JToggleButton(new ImageIcon("src\\by\\jum\\texteditor\\icons\\Formatting (Bold).png"));
-        JToggleButton italicButton = new JToggleButton(new ImageIcon("src\\by\\jum\\texteditor\\icons\\Formatting (Italic).png"));
-        JButton saveButton = new JButton(new ImageIcon("src\\by\\jum\\texteditor/icons\\save.png"));
-        JButton openFileButton = new JButton(new ImageIcon("src\\by\\jum\\texteditor\\icons\\open.png"));
-        JButton newFileButton = new JButton(new ImageIcon("src\\by\\jum\\texteditor\\icons\\new.png"));
+        JToggleButton boldButton = new JToggleButton(new ImageIcon(Path.BOLD_ICON.getPath()));
+        JToggleButton italicButton = new JToggleButton(new ImageIcon(Path.ITALIC_ICON.getPath()));
+        JButton saveButton = new JButton(new ImageIcon(Path.SAVE_ICON.getPath()));
+        JButton openFileButton = new JButton(new ImageIcon(Path.OPEN_ICON.getPath()));
+        JButton newFileButton = new JButton(new ImageIcon(Path.NEW_FILE_ICON.getPath()));
 
-        boldButton.setActionCommand("Bold");
-        italicButton.setActionCommand("Italic");
-        saveButton.setActionCommand("Save");
-        openFileButton.setActionCommand("Open File");
-        newFileButton.setActionCommand("New File");
+        boldButton.setActionCommand(MenuName.BOLD);
+        italicButton.setActionCommand(MenuName.ITALIC);
+        saveButton.setActionCommand(MenuName.SAVE_FILE);
+        openFileButton.setActionCommand(MenuName.OPEN_FILE);
+        newFileButton.setActionCommand(MenuName.NEW_FILE);
 
         toolBar.add(newFileButton);
         toolBar.add(openFileButton);

@@ -1,6 +1,4 @@
-package by.jum.texteditor.Symbol;
-
-import by.jum.texteditor.mainwindow.MyTextPane;
+package by.jum.texteditor.symbol;
 
 import javax.swing.JComponent;
 import java.awt.Color;
@@ -8,35 +6,30 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-public class Symbol extends JComponent{
+public class Symbol extends JComponent {
     private String mySymbol;
-    private MyTextPane myTextPane;
-    private Graphics2D graphics2D;
-    private int symbolWight;
+    private Font font;
 
-    public Symbol(String mySymbol, MyTextPane myTextPane) {
+    public Symbol(String mySymbol, Font font) {
         this.mySymbol = mySymbol;
-        this.myTextPane = myTextPane;
-
-
+        this.font = font;
         //setBorder(BorderFactory.createLineBorder(Color.RED));
     }
 
 
+    public void setFont(Font newFont) {
+        font = newFont;
+        repaint();
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D graphics2D = (Graphics2D) g;
         graphics2D = (Graphics2D) g;
         graphics2D.setPaint(Color.blue);
-        graphics2D.setFont(new Font("Times New Roman", Font.PLAIN, 30));
-        graphics2D.drawString(mySymbol, 0, 30);
-
-       // System.out.println(symbolWight);
-       // setBounds(20,10,4+symbolWight, a+4);
-      //  System.out.println(s);
+        graphics2D.setFont(font);
+        graphics2D.drawString(mySymbol, 0, font.getSize2D() - 2);
     }
 
-
-    public int getSymbolWigth(){
-        return symbolWight;
-    }
 }

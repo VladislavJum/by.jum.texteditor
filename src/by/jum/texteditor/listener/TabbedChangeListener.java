@@ -1,12 +1,9 @@
 package by.jum.texteditor.listener;
 
-import javax.swing.*;
+import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-/**
- * Created by Vlad on 12.03.2015.
- */
 public class TabbedChangeListener implements ChangeListener {
     private JTabbedPane tabbedPane;
 
@@ -15,8 +12,7 @@ public class TabbedChangeListener implements ChangeListener {
     }
 
     @Override
-    public
-    void stateChanged(ChangeEvent e) {
+    public void stateChanged(ChangeEvent e) {
         //System.out.println(tabbedPane.getSelectedComponent());
     }
 }
