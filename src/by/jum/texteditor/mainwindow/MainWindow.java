@@ -2,7 +2,8 @@ package by.jum.texteditor.mainwindow;
 
 import by.jum.texteditor.constants.MenuName;
 import by.jum.texteditor.constants.Path;
-import by.jum.texteditor.listener.ComboBoxListener;
+import by.jum.texteditor.listener.SizeComboboxListener;
+import by.jum.texteditor.listener.StyleComboBoxListener;
 import by.jum.texteditor.listener.TabbedChangeListener;
 import by.jum.texteditor.listener.filelistener.CloseListener;
 import by.jum.texteditor.listener.filelistener.NewFileListener;
@@ -34,7 +35,8 @@ import java.awt.event.KeyEvent;
 
 public class MainWindow {
     private JFrame mainWindow;
-    private JComboBox<String> comboBox;
+    private JComboBox<String> styleComboBox;
+    private JComboBox<Integer> sizeComboBox;
     private JTabbedPane tabbedPane;
 
     public MainWindow() {
@@ -49,8 +51,12 @@ public class MainWindow {
         mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainWindow.setLocationRelativeTo(null);
 
-        comboBox = new JComboBox<String>(MenuName.NAME_STYLES);
-        comboBox.setEditable(true);
+        styleComboBox = new JComboBox<String>(MenuName.NAME_STYLES);
+        sizeComboBox = new JComboBox<Integer>(MenuName.SIZE_STYLE);
+        sizeComboBox.setSelectedIndex(7);
+        styleComboBox.setSelectedIndex(0);
+
+
 
         tabbedPane = new JTabbedPane();
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -63,7 +69,8 @@ public class MainWindow {
         createToolBar();
 
         mainWindow.setVisible(true);
-        comboBox.addActionListener(new ComboBoxListener(tabbedPane));
+        styleComboBox.addActionListener(new StyleComboBoxListener(tabbedPane));
+        sizeComboBox.addActionListener(new SizeComboboxListener(tabbedPane));
     }
 
     void createItem() {
@@ -161,12 +168,15 @@ public class MainWindow {
         toolBar.add(boldButton);
         toolBar.add(italicButton);
 
+
         Choice choice = new Choice();
         choice.add("sd");
         choice.add("sd1");
         choice.add("sd2");
 
-        toolBar.add(comboBox);
+
+        toolBar.add(sizeComboBox);
+        toolBar.add(styleComboBox);
         toolBar.setFloatable(false);
         mainWindow.add(toolBar, BorderLayout.NORTH);
         mainWindow.setVisible(true);

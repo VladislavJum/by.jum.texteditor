@@ -22,6 +22,10 @@ public class Symbol extends JComponent {
         repaint();
     }
 
+    public Font getMyFont(){
+        return font;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

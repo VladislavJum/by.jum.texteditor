@@ -1,14 +1,15 @@
 package by.jum.texteditor.listener;
 
-import javax.swing.JPanel;
+import by.jum.texteditor.mainwindow.MyTextPane;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class FocusMyTextPaneListener implements MouseListener {
-    private JPanel panel;
+    private MyTextPane myTextPane;
 
-    public FocusMyTextPaneListener(JPanel panel) {
-        this.panel = panel;
+    public FocusMyTextPaneListener(MyTextPane myTextPane) {
+        this.myTextPane = myTextPane;
     }
 
     @Override
@@ -17,7 +18,7 @@ public class FocusMyTextPaneListener implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        panel.requestFocusInWindow();
+        myTextPane.requestFocusInWindow();
 
     }
 

@@ -27,7 +27,11 @@ public class Caret extends JComponent {
 
     }
 
-    void myTimer() {
+    public int getCaretPositionX(){
+        return caretPositionX1;
+    }
+
+    public void myTimer() {
 
         Timer timer = new Timer(500, new ActionListener() {
             @Override

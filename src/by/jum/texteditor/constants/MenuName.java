@@ -20,5 +20,6 @@ public class MenuName {
     public static final String CUT = "Cut";
     public static final String PASTE = "Paste";
 
-    public static final String[] NAME_STYLES = {"Times New Roman", "Calibri", "Arial"};
+    public static final String[] NAME_STYLES = {"Calibri", "Times New Roman", "Arial", "Aharoni", "Batang"};
+    public static final Integer[] SIZE_STYLE = {11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72};
 }
