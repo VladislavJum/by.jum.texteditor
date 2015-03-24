@@ -1,7 +1,7 @@
 package by.jum.texteditor;
 
 import by.jum.texteditor.mainwindow.Caret;
-import by.jum.texteditor.mainwindow.MyTextPane;
+import by.jum.texteditor.mainwindow.TextPane;
 import by.jum.texteditor.symbol.Symbol;
 
 import java.awt.Font;
@@ -15,9 +15,9 @@ public class Draw {
     private String mySymbol = "";
     private int step = 10, symbolWight, symbolHeight;
 
-    public Draw(MyTextPane myTextPane, List<String> stringSymbolList, List<Symbol> symbolList) {
+    public Draw(TextPane myTextPane, List<String> stringSymbolList, List<Symbol> symbolList) {
         Caret caret = new Caret();
-        caret.myTimer();
+        caret.caretBlink();
         //myTextPane.add(caret);
 
         for(int iteratorList = 0; iteratorList < stringSymbolList.size(); iteratorList++ ){

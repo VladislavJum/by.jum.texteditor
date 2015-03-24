@@ -2,8 +2,10 @@ package by.jum.texteditor.mainwindow;
 
 import by.jum.texteditor.constants.MenuName;
 import by.jum.texteditor.constants.Path;
-import by.jum.texteditor.listener.SizeComboboxListener;
-import by.jum.texteditor.listener.StyleComboBoxListener;
+import by.jum.texteditor.listener.ButtonListener.BoldListener;
+import by.jum.texteditor.listener.ButtonListener.ItalicListener;
+import by.jum.texteditor.listener.ComboBoxListener.SizeSymbolListener;
+import by.jum.texteditor.listener.ComboBoxListener.StyleSymbolListener;
 import by.jum.texteditor.listener.TabbedChangeListener;
 import by.jum.texteditor.listener.filelistener.CloseListener;
 import by.jum.texteditor.listener.filelistener.NewFileListener;
@@ -69,8 +71,8 @@ public class MainWindow {
         createToolBar();
 
         mainWindow.setVisible(true);
-        styleComboBox.addActionListener(new StyleComboBoxListener(tabbedPane));
-        sizeComboBox.addActionListener(new SizeComboboxListener(tabbedPane));
+        styleComboBox.addActionListener(new StyleSymbolListener(tabbedPane));
+        sizeComboBox.addActionListener(new SizeSymbolListener(tabbedPane));
     }
 
     void createItem() {
@@ -188,6 +190,8 @@ public class MainWindow {
         italicButton.addActionListener(new ItalicListener(tabbedPane));
 */
         newFileButton.addActionListener(new NewFileListener(tabbedPane));
+        boldButton.addActionListener(new BoldListener(tabbedPane));
+        italicButton.addActionListener(new ItalicListener(tabbedPane));
     }
 
 }

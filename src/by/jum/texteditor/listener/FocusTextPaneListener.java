@@ -1,14 +1,14 @@
 package by.jum.texteditor.listener;
 
-import by.jum.texteditor.mainwindow.MyTextPane;
+import by.jum.texteditor.mainwindow.TextPane;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class FocusMyTextPaneListener implements MouseListener {
-    private MyTextPane myTextPane;
+public class FocusTextPaneListener implements MouseListener {
+    private TextPane myTextPane;
 
-    public FocusMyTextPaneListener(MyTextPane myTextPane) {
+    public FocusTextPaneListener(TextPane myTextPane) {
         this.myTextPane = myTextPane;
     }
 

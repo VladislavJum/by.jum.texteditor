@@ -1,7 +1,7 @@
 package by.jum.texteditor.listener.filelistener;
 
-import by.jum.texteditor.mainwindow.CreateMyTextPane;
-import by.jum.texteditor.mainwindow.MyTextPane;
+import by.jum.texteditor.mainwindow.TextPaneCreator;
+import by.jum.texteditor.mainwindow.TextPane;
 
 import javax.swing.JTabbedPane;
 import java.awt.event.ActionEvent;
@@ -16,8 +16,8 @@ public class NewFileListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        CreateMyTextPane textPanel = new CreateMyTextPane();
-        MyTextPane myTextPane = textPanel.createMyTextPane();
+        TextPaneCreator textPanel = new TextPaneCreator();
+        TextPane myTextPane = textPanel.createMyTextPane();
 
         tabbedPane.add("untitled", myTextPane);
         tabbedPane.setSelectedComponent(myTextPane);

@@ -1,20 +1,20 @@
 package by.jum.texteditor.mainwindow;
 
-import by.jum.texteditor.listener.MyKeyListener;
+import by.jum.texteditor.listener.SymbolKeyListener;
 
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 
-public class MyTextPane extends JPanel {
+public class TextPane extends JPanel {
     private Caret caret;
     private Font font;
     private int caretPositionX1, caretPositionX2, caretPositionY1, caretPositionY2;
     private String nameStyle = "Calibri";
     private int style = Font.PLAIN, size = 24;
 
-    public MyTextPane() {
+    public TextPane() {
         font = new Font(nameStyle, style, size);
         caretPositionX1 = 10;
         caretPositionY1 = 5;
@@ -22,10 +22,10 @@ public class MyTextPane extends JPanel {
         setLayout(null);
         setBackground(Color.white);
         setCursor(new Cursor(Cursor.TEXT_CURSOR));
-        addKeyListener(new MyKeyListener(this));
+        addKeyListener(new SymbolKeyListener(this));
 
         caret = new Caret();
-        caret.myTimer();
+        caret.caretBlink();
         add(caret);
     }
 

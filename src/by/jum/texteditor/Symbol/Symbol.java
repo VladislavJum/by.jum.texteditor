@@ -30,7 +30,6 @@ public class Symbol extends JComponent {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D graphics2D = (Graphics2D) g;
-        graphics2D = (Graphics2D) g;
         graphics2D.setPaint(Color.blue);
         graphics2D.setFont(font);
         graphics2D.drawString(mySymbol, 0, font.getSize2D() - 2);
