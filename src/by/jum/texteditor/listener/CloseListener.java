@@ -1,4 +1,4 @@
-package by.jum.texteditor.listener.filelistener;
+package by.jum.texteditor.listener;
 
 import javax.swing.JTabbedPane;
 import java.awt.event.ActionEvent;

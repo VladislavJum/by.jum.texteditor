@@ -1,6 +1,7 @@
-package by.jum.texteditor.mainwindow;
+package by.jum.texteditor.windows.textpane;
 
 import by.jum.texteditor.listener.SymbolKeyListener;
+import by.jum.texteditor.windows.Caret;
 
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -10,15 +11,11 @@ import java.awt.Font;
 public class TextPane extends JPanel {
     private Caret caret;
     private Font font;
-    private int caretPositionX1, caretPositionX2, caretPositionY1, caretPositionY2;
     private String nameStyle = "Calibri";
     private int style = Font.PLAIN, size = 24;
 
     public TextPane() {
         font = new Font(nameStyle, style, size);
-        caretPositionX1 = 10;
-        caretPositionY1 = 5;
-        caretPositionY2 = 20;
         setLayout(null);
         setBackground(Color.white);
         setCursor(new Cursor(Cursor.TEXT_CURSOR));
@@ -40,16 +37,23 @@ public class TextPane extends JPanel {
     public void setNameStyleSymbol(String nameStyle){
         this.nameStyle = nameStyle;
         this.font = new Font(nameStyle, style, size);
+        this.requestFocusInWindow();
     }
 
     public void setStyleSymbol(int style){
         this.style = style;
         this.font = new Font(nameStyle, style, size);
+        this.requestFocusInWindow();
     }
 
     public void setSizeSymbol(int size){
         this.size = size;
         this.font = new Font(nameStyle, style, size);
+        this.requestFocusInWindow();
+    }
+
+    public int getSizeSymbol(){
+        return size;
     }
 
 }

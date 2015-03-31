@@ -1,9 +1,8 @@
-package by.jum.texteditor.mainwindow;
+package by.jum.texteditor.windows.textpane;
 
 import by.jum.texteditor.listener.FocusTextPaneListener;
 
 import javax.swing.border.LineBorder;
-
 
 public class TextPaneCreator {
 

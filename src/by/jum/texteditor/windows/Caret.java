@@ -1,4 +1,4 @@
-package by.jum.texteditor.mainwindow;
+package by.jum.texteditor.windows;
 
 import javax.swing.JComponent;
 import javax.swing.Timer;
@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
 
 public class Caret extends JComponent {
-    int caretPositionX1, caretPositionY1, caretPositionY2;
+    private int caretPositionX1, caretPositionY1, caretPositionY2;
     private boolean boolVisible;
 
     public Caret() {
@@ -23,12 +23,21 @@ public class Caret extends JComponent {
 
     public void setCaretPosition(int caretPositionX1, int caretPositionY1, int caretPositionY2) {
         this.caretPositionY2 = caretPositionY2;
+        this.caretPositionX1 = caretPositionX1;
+        this.caretPositionY1 = caretPositionY1;
         setBounds(caretPositionX1, caretPositionY1, 3, caretPositionY2);
-
     }
 
-    public int getCaretPositionX(){
+    public int getCaretPositionX1(){
         return caretPositionX1;
+    }
+
+    public void setCaretPositionX1(int caretPositionX1){
+        this.caretPositionX1 = caretPositionX1;
+    }
+
+    public int getCaretPositionY1(){
+        return caretPositionY1;
     }
 
     public void caretBlink() {
@@ -36,13 +45,8 @@ public class Caret extends JComponent {
         Timer timer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!boolVisible) {
-                    boolVisible = true;
-                    repaint();
-                } else {
-                    boolVisible = false;
-                    repaint();
-                }
+                boolVisible=!boolVisible;
+                repaint();
             }
         });
         timer.start();

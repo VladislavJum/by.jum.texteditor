@@ -1,7 +1,7 @@
-package by.jum.texteditor.listener.filelistener;
+package by.jum.texteditor.listener;
 
-import by.jum.texteditor.mainwindow.TextPaneCreator;
-import by.jum.texteditor.mainwindow.TextPane;
+import by.jum.texteditor.windows.textpane.TextPane;
+import by.jum.texteditor.windows.textpane.TextPaneCreator;
 
 import javax.swing.JTabbedPane;
 import java.awt.event.ActionEvent;
@@ -23,6 +23,4 @@ public class NewFileListener implements ActionListener {
         tabbedPane.setSelectedComponent(myTextPane);
         tabbedPane.getSelectedComponent().requestFocusInWindow();
     }
-
-
 }

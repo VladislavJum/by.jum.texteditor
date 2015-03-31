@@ -1,6 +1,6 @@
 package by.jum.texteditor;
 
-import by.jum.texteditor.mainwindow.MainWindow;
+import by.jum.texteditor.windows.MainWindow;
 
 import javax.swing.SwingUtilities;
 

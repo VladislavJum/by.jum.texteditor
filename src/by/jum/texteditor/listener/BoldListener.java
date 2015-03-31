@@ -1,6 +1,6 @@
-package by.jum.texteditor.listener.ButtonListener;
+package by.jum.texteditor.listener;
 
-import by.jum.texteditor.mainwindow.TextPane;
+import by.jum.texteditor.windows.textpane.TextPane;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
@@ -25,6 +25,5 @@ public class BoldListener implements ActionListener {
         } else {
             myTextPane.setStyleSymbol(Font.PLAIN);
         }
-        myTextPane.requestFocusInWindow();
     }
 }

@@ -1,21 +1,21 @@
 package by.jum.texteditor.symbol;
 
-import javax.swing.JComponent;
+import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-public class Symbol extends JComponent {
+public class Symbol extends JPanel {
     private String mySymbol;
     private Font font;
 
     public Symbol(String mySymbol, Font font) {
         this.mySymbol = mySymbol;
         this.font = font;
-        //setBorder(BorderFactory.createLineBorder(Color.RED));
+       // setBorder(BorderFactory.createLineBorder(Color.RED));
+        setBackground(Color.white);
     }
-
 
     public void setFont(Font newFont) {
         font = newFont;

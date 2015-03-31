@@ -1,6 +1,6 @@
-package by.jum.texteditor.listener.ComboBoxListener;
+package by.jum.texteditor.listener;
 
-import by.jum.texteditor.mainwindow.TextPane;
+import by.jum.texteditor.windows.textpane.TextPane;
 
 import javax.swing.JComboBox;
 import javax.swing.JTabbedPane;
@@ -19,8 +19,7 @@ public class StyleSymbolListener implements ActionListener {
         JComboBox comboBox = (JComboBox) e.getSource();
         String nameStyle = String.valueOf(comboBox.getSelectedItem());
 
-        TextPane myTextPane = (TextPane)tabbedPane.getSelectedComponent();
+        TextPane myTextPane = (TextPane) tabbedPane.getSelectedComponent();
         myTextPane.setNameStyleSymbol(nameStyle);
-        myTextPane.requestFocusInWindow();
     }
 }

@@ -1,14 +1,13 @@
-package by.jum.texteditor.mainwindow;
+package by.jum.texteditor.windows;
 
 import by.jum.texteditor.constants.MenuName;
 import by.jum.texteditor.constants.Path;
-import by.jum.texteditor.listener.ButtonListener.BoldListener;
-import by.jum.texteditor.listener.ButtonListener.ItalicListener;
-import by.jum.texteditor.listener.ComboBoxListener.SizeSymbolListener;
-import by.jum.texteditor.listener.ComboBoxListener.StyleSymbolListener;
-import by.jum.texteditor.listener.TabbedChangeListener;
-import by.jum.texteditor.listener.filelistener.CloseListener;
-import by.jum.texteditor.listener.filelistener.NewFileListener;
+import by.jum.texteditor.listener.BoldListener;
+import by.jum.texteditor.listener.ItalicListener;
+import by.jum.texteditor.listener.SizeSymbolListener;
+import by.jum.texteditor.listener.StyleSymbolListener;
+import by.jum.texteditor.listener.CloseListener;
+import by.jum.texteditor.listener.NewFileListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -58,12 +57,10 @@ public class MainWindow {
         sizeComboBox.setSelectedIndex(7);
         styleComboBox.setSelectedIndex(0);
 
-
-
         tabbedPane = new JTabbedPane();
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
-        tabbedPane.addChangeListener(new TabbedChangeListener(tabbedPane));
+        //tabbedPane.addChangeListener(new TabbedChangeListener(tabbedPane));
 
         mainWindow.add(tabbedPane, BorderLayout.CENTER);
 

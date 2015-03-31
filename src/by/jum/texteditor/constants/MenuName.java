@@ -1,6 +1,6 @@
 package by.jum.texteditor.constants;
 
-public class MenuName {
+public final class MenuName {
     public static final String TITLE = "My Text Editor";
 
     public static final String FILE = "File";
