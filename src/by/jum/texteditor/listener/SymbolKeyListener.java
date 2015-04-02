@@ -1,5 +1,6 @@
 package by.jum.texteditor.listener;
 
+import by.jum.texteditor.document.Document;
 import by.jum.texteditor.symbol.SymbolCreator;
 import by.jum.texteditor.windows.textpane.TextPane;
 
@@ -11,10 +12,12 @@ public class SymbolKeyListener implements KeyListener {
     private TextPane myTextPane;
     private String symbolString = "";
     private SymbolCreator mySymbolCreator;
+    private Document document;
 
-    public SymbolKeyListener(TextPane myTextPane) {
+    public SymbolKeyListener(TextPane myTextPane, Document document) {
         this.myTextPane = myTextPane;
-        mySymbolCreator = new SymbolCreator(myTextPane);
+        this.document = document;
+        mySymbolCreator = new SymbolCreator(myTextPane, document);
     }
 
     @Override

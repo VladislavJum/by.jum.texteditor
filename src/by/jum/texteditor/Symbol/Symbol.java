@@ -1,5 +1,7 @@
 package by.jum.texteditor.symbol;
 
+import by.jum.texteditor.document.Document;
+
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Font;
@@ -10,11 +12,12 @@ public class Symbol extends JPanel {
     private String mySymbol;
     private Font font;
 
-    public Symbol(String mySymbol, Font font) {
+    public Symbol(String mySymbol, Document document) {
         this.mySymbol = mySymbol;
-        this.font = font;
+        this.font = document.getMyFont();
        // setBorder(BorderFactory.createLineBorder(Color.RED));
         setBackground(Color.white);
+
     }
 
     public void setFont(Font newFont) {
@@ -22,7 +25,7 @@ public class Symbol extends JPanel {
         repaint();
     }
 
-    public Font getMyFont(){
+    public Font getDocument(){
         return font;
     }
 

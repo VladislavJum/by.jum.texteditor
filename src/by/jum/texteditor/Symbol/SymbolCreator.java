@@ -1,8 +1,8 @@
 package by.jum.texteditor.symbol;
 
+import by.jum.texteditor.document.Document;
 import by.jum.texteditor.windows.textpane.TextPane;
 
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,15 +11,18 @@ public class SymbolCreator {
     private TextPane myTextPane;
     private List<String> stringSymbolList = new ArrayList<String>();
     private List<Symbol> symbolList = new ArrayList<Symbol>();
+
     private SymbolLocation symbolLocation;
-    public SymbolCreator(TextPane myTextPane) {
+    private Document document;
+
+    public SymbolCreator(TextPane myTextPane, Document document) {
         this.myTextPane = myTextPane;
+        this.document = document;
         symbolLocation = new SymbolLocation(myTextPane);
     }
 
     public void createSymbol(String symbolString) {
-        Font font = myTextPane.getMyFont();
-        Symbol symbol = new Symbol(symbolString, font);
+        Symbol symbol = new Symbol(symbolString, document);
 
         stringSymbolList.add(symbolString);
         symbolList.add(symbol);

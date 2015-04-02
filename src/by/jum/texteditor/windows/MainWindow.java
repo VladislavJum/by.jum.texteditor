@@ -2,12 +2,13 @@ package by.jum.texteditor.windows;
 
 import by.jum.texteditor.constants.MenuName;
 import by.jum.texteditor.constants.Path;
+import by.jum.texteditor.document.Document;
 import by.jum.texteditor.listener.BoldListener;
+import by.jum.texteditor.listener.CloseListener;
 import by.jum.texteditor.listener.ItalicListener;
+import by.jum.texteditor.listener.NewFileListener;
 import by.jum.texteditor.listener.SizeSymbolListener;
 import by.jum.texteditor.listener.StyleSymbolListener;
-import by.jum.texteditor.listener.CloseListener;
-import by.jum.texteditor.listener.NewFileListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,7 +26,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.BorderLayout;
-import java.awt.Choice;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -39,6 +39,7 @@ public class MainWindow {
     private JComboBox<String> styleComboBox;
     private JComboBox<Integer> sizeComboBox;
     private JTabbedPane tabbedPane;
+    private Document document = new Document();
 
     public MainWindow() {
         try {
@@ -68,8 +69,8 @@ public class MainWindow {
         createToolBar();
 
         mainWindow.setVisible(true);
-        styleComboBox.addActionListener(new StyleSymbolListener(tabbedPane));
-        sizeComboBox.addActionListener(new SizeSymbolListener(tabbedPane));
+        styleComboBox.addActionListener(new StyleSymbolListener(tabbedPane, document));
+        sizeComboBox.addActionListener(new SizeSymbolListener(tabbedPane, document));
     }
 
     void createItem() {
@@ -134,7 +135,7 @@ public class MainWindow {
         copyEditItem.addActionListener(copyCutPasteListener);
         cutEditItem.addActionListener(copyCutPasteListener);
         pasteEditItem.addActionListener(copyCutPasteListener);*/
-        newFileItem.addActionListener(new NewFileListener(tabbedPane));
+        newFileItem.addActionListener(new NewFileListener(tabbedPane, document));
         closeFileItem.addActionListener(new CloseListener(tabbedPane));
         exitFileItem.addActionListener(new ActionListener() {
             @Override
@@ -168,12 +169,6 @@ public class MainWindow {
         toolBar.add(italicButton);
 
 
-        Choice choice = new Choice();
-        choice.add("sd");
-        choice.add("sd1");
-        choice.add("sd2");
-
-
         toolBar.add(sizeComboBox);
         toolBar.add(styleComboBox);
         toolBar.setFloatable(false);
@@ -186,9 +181,9 @@ public class MainWindow {
         boldButton.addActionListener(new BoldListener(tabbedPane));
         italicButton.addActionListener(new ItalicListener(tabbedPane));
 */
-        newFileButton.addActionListener(new NewFileListener(tabbedPane));
-        boldButton.addActionListener(new BoldListener(tabbedPane));
-        italicButton.addActionListener(new ItalicListener(tabbedPane));
+        newFileButton.addActionListener(new NewFileListener(tabbedPane, document));
+        boldButton.addActionListener(new BoldListener(document));
+        italicButton.addActionListener(new ItalicListener(document));
     }
 
 }

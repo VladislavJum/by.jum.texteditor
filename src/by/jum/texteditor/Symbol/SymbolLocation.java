@@ -3,18 +3,18 @@ package by.jum.texteditor.symbol;
 import by.jum.texteditor.windows.Caret;
 import by.jum.texteditor.windows.textpane.TextPane;
 
-import java.awt.Font;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SymbolLocation {
     private String mySymbol = "";
-    private int stepColumn = 10, stepRow = 10, symbolWight, symbolHeight, x = 28, y = 0, newStringPosistion = 0, iteratorList = 0;
+    private int stepColumn = 10, stepRow = 10, symbolWight, symbolHeight, x = 28, y = 0, newStringPosistion = -1, iteratorList = 0;
     private Caret caret;
     private TextPane myTextPane;
+    private List<Integer> enterPosition = new ArrayList<Integer>();
 
     public SymbolLocation(TextPane myTextPane) {
-        iteratorList = newStringPosistion;
         this.myTextPane = myTextPane;
     }
 
@@ -26,12 +26,12 @@ public class SymbolLocation {
             crossLine();
 
             Symbol symbol = symbolList.get(iteratorList);
-            Font font = symbol.getMyFont();
             Graphics2D graphics2D = (Graphics2D) symbol.getGraphics();
-            graphics2D.setFont(font);
+            graphics2D.setFont(symbol.getDocument());
 
             symbolWight = graphics2D.getFontMetrics().stringWidth(mySymbol);
-            symbolHeight = 4 + (int) font.getSize2D();
+            symbolHeight = 4 + (int) symbol.getDocument().getSize2D();
+
             stepColumn = caret.getCaretPositionX1();
 
             alignHeightDown();
@@ -55,6 +55,7 @@ public class SymbolLocation {
     void crossLine() {
         if (mySymbol.equals("\n")) {
             newStringPosistion = iteratorList;
+            enterPosition.add(iteratorList);
             stepRow += x;
             x = symbolHeight;
             caret.setCaretPositionX1(10);
