@@ -31,11 +31,4 @@ public class Document {
         this.font = new Font(nameStyle, style, size);
     }
 
-    public void setMyFont(Font font){
-        this.font = font;
-    }
-
-    public int getSizeSymbol(){
-        return size;
-    }
 }

@@ -1,4 +1,4 @@
-package by.jum.texteditor.symbol;
+package by.jum.texteditor.windows.symbol;
 
 import by.jum.texteditor.document.Document;
 
@@ -11,13 +11,17 @@ import java.awt.Graphics2D;
 public class Symbol extends JPanel {
     private String mySymbol;
     private Font font;
+    private int symbolPositionY1;
+    private int symbolPositionX1;
+    private int symbolHeight;
+    private int symbolWidth;
 
     public Symbol(String mySymbol, Document document) {
         this.mySymbol = mySymbol;
         this.font = document.getMyFont();
-       // setBorder(BorderFactory.createLineBorder(Color.RED));
+        //setBorder(BorderFactory.createLineBorder(Color.RED));
         setBackground(Color.white);
-
+        setName("S");
     }
 
     public void setFont(Font newFont) {
@@ -36,6 +40,35 @@ public class Symbol extends JPanel {
         graphics2D.setPaint(Color.blue);
         graphics2D.setFont(font);
         graphics2D.drawString(mySymbol, 0, font.getSize2D() - 2);
+    }
+
+    @Override
+    public void setBounds(int x, int y, int width, int height) {
+        super.setBounds(x, y, width, height);
+        symbolPositionY1 = y;
+        symbolPositionX1 = x;
+        symbolHeight = height;
+        symbolWidth = width;
+    }
+
+    public int getSymbolPositionY1(){
+        return symbolPositionY1;
+    }
+
+    public int getSymbolPositionX1(){
+        return symbolPositionX1;
+    }
+
+    public int getSymbolHeight(){
+        return symbolHeight;
+    }
+
+    public int getSymbolWidth(){
+        return symbolWidth;
+    }
+
+    public String getSymbol(){
+        return mySymbol;
     }
 
 }

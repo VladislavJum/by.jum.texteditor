@@ -5,10 +5,14 @@ import by.jum.texteditor.constants.Path;
 import by.jum.texteditor.document.Document;
 import by.jum.texteditor.listener.BoldListener;
 import by.jum.texteditor.listener.CloseListener;
+import by.jum.texteditor.listener.CopyCutPasteListener;
 import by.jum.texteditor.listener.ItalicListener;
 import by.jum.texteditor.listener.NewFileListener;
-import by.jum.texteditor.listener.SizeSymbolListener;
-import by.jum.texteditor.listener.StyleSymbolListener;
+import by.jum.texteditor.listener.SizeComboBoxListener;
+import by.jum.texteditor.listener.SizeMenuListener;
+import by.jum.texteditor.listener.StyleComboBoxListener;
+import by.jum.texteditor.listener.StyleMenuListener;
+import by.jum.texteditor.windows.symbol.SymbolStorage;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -40,6 +44,8 @@ public class MainWindow {
     private JComboBox<Integer> sizeComboBox;
     private JTabbedPane tabbedPane;
     private Document document = new Document();
+    private SymbolStorage symbolStorage = new SymbolStorage();
+
 
     public MainWindow() {
         try {
@@ -53,7 +59,7 @@ public class MainWindow {
         mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainWindow.setLocationRelativeTo(null);
 
-        styleComboBox = new JComboBox<String>(MenuName.NAME_STYLES);
+        styleComboBox = new JComboBox<String>(MenuName.NAME_STYLE);
         sizeComboBox = new JComboBox<Integer>(MenuName.SIZE_STYLE);
         sizeComboBox.setSelectedIndex(7);
         styleComboBox.setSelectedIndex(0);
@@ -69,8 +75,8 @@ public class MainWindow {
         createToolBar();
 
         mainWindow.setVisible(true);
-        styleComboBox.addActionListener(new StyleSymbolListener(tabbedPane, document));
-        sizeComboBox.addActionListener(new SizeSymbolListener(tabbedPane, document));
+        styleComboBox.addActionListener(new StyleComboBoxListener(tabbedPane, document, symbolStorage));
+        sizeComboBox.addActionListener(new SizeComboBoxListener(tabbedPane, document, symbolStorage));
     }
 
     void createItem() {
@@ -78,9 +84,7 @@ public class MainWindow {
         JMenuBar mainMenu = new JMenuBar();
         JMenu fileMenu = new JMenu(MenuName.FILE);
         JMenu editMenu = new JMenu(MenuName.EDIT);
-
-        fileMenu.setMnemonic(KeyEvent.VK_F);
-        editMenu.setMnemonic(KeyEvent.VK_E);
+        final JMenu styleMenu = new JMenu(MenuName.STYLE);
 
         JMenuItem newFileItem = new JMenuItem(MenuName.NEW_FILE, KeyEvent.VK_N);
         JMenuItem openFileItem = new JMenuItem(MenuName.OPEN_FILE, KeyEvent.VK_O);
@@ -92,6 +96,9 @@ public class MainWindow {
         JMenuItem copyEditItem = new JMenuItem(MenuName.COPY, KeyEvent.VK_C);
         JMenuItem cutEditItem = new JMenuItem(MenuName.CUT, KeyEvent.VK_X);
         JMenuItem pasteEditItem = new JMenuItem(MenuName.PASTE, KeyEvent.VK_V);
+
+        JMenu fontMenu = new JMenu(MenuName.FONT);
+        JMenu sizeMenu = new JMenu(MenuName.SIZE);
 
         ImageIcon openFileIcon = new ImageIcon(Path.OPEN_ICON.getPath());
         ImageIcon copyIcon = new ImageIcon(Path.COPY_ICON.getPath());
@@ -114,7 +121,7 @@ public class MainWindow {
         pasteEditItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
 
         editMenu.add(copyEditItem);
-        editMenu.add(cutEditItem);
+        //editMenu.add(cutEditItem);
         editMenu.add(pasteEditItem);
 
         fileMenu.add(newFileItem);
@@ -125,17 +132,35 @@ public class MainWindow {
         fileMenu.addSeparator();
         fileMenu.add(exitFileItem);
 
+        styleMenu.add(fontMenu);
+        styleMenu.add(sizeMenu);
+
         mainMenu.add(fileMenu);
         mainMenu.add(editMenu);
+        mainMenu.add(styleMenu);
+
+
+        for (int nameIterator = 0; nameIterator < MenuName.NAME_STYLE.length; nameIterator++) {
+            JMenuItem style = new JMenuItem(MenuName.NAME_STYLE[nameIterator]);
+            fontMenu.add(style);
+            style.addActionListener(new StyleMenuListener(styleComboBox, MenuName.NAME_STYLE[nameIterator]));
+        }
+
+        for (int sizeIterator = 0; sizeIterator < MenuName.SIZE_STYLE.length; sizeIterator++) {
+            JMenuItem size = new JMenuItem(String.valueOf(MenuName.SIZE_STYLE[sizeIterator]));
+            sizeMenu.add(size);
+            size.addActionListener(new SizeMenuListener(sizeComboBox, MenuName.SIZE_STYLE[sizeIterator]));
+        }
 
         mainWindow.setJMenuBar(mainMenu);
 
-       /* CopyCutPasteListener copyCutPasteListener = new CopyCutPasteListener(tabbedPane);
+        CopyCutPasteListener copyCutPasteListener = new CopyCutPasteListener(symbolStorage, tabbedPane, document);
 
         copyEditItem.addActionListener(copyCutPasteListener);
         cutEditItem.addActionListener(copyCutPasteListener);
-        pasteEditItem.addActionListener(copyCutPasteListener);*/
-        newFileItem.addActionListener(new NewFileListener(tabbedPane, document));
+        pasteEditItem.addActionListener(copyCutPasteListener);
+
+        newFileItem.addActionListener(new NewFileListener(tabbedPane, document, symbolStorage));
         closeFileItem.addActionListener(new CloseListener(tabbedPane));
         exitFileItem.addActionListener(new ActionListener() {
             @Override
@@ -155,6 +180,11 @@ public class MainWindow {
         JButton saveButton = new JButton(new ImageIcon(Path.SAVE_ICON.getPath()));
         JButton openFileButton = new JButton(new ImageIcon(Path.OPEN_ICON.getPath()));
         JButton newFileButton = new JButton(new ImageIcon(Path.NEW_FILE_ICON.getPath()));
+        JButton copyButton = new JButton(new ImageIcon(Path.COPY_ICON.getPath()));
+        JButton pasteButton = new JButton(new ImageIcon(Path.PASTE_ICON.getPath()));
+
+        copyButton.setActionCommand(MenuName.COPY);
+        pasteButton.setActionCommand(MenuName.PASTE);
 
         boldButton.setActionCommand(MenuName.BOLD);
         italicButton.setActionCommand(MenuName.ITALIC);
@@ -165,6 +195,8 @@ public class MainWindow {
         toolBar.add(newFileButton);
         toolBar.add(openFileButton);
         toolBar.add(saveButton);
+        toolBar.add(copyButton);
+        toolBar.add(pasteButton);
         toolBar.add(boldButton);
         toolBar.add(italicButton);
 
@@ -175,15 +207,11 @@ public class MainWindow {
         mainWindow.add(toolBar, BorderLayout.NORTH);
         mainWindow.setVisible(true);
 
-
-       /* caret.addChangeListener(new AttributeListener(tabbedPane, toolBar));
-        tabbedPane.addChangeListener(new TabbedPaneListener(tabbedPane, toolBar));
-        boldButton.addActionListener(new BoldListener(tabbedPane));
-        italicButton.addActionListener(new ItalicListener(tabbedPane));
-*/
-        newFileButton.addActionListener(new NewFileListener(tabbedPane, document));
-        boldButton.addActionListener(new BoldListener(document));
-        italicButton.addActionListener(new ItalicListener(document));
+        copyButton.addActionListener(new CopyCutPasteListener(symbolStorage, tabbedPane, document));
+        pasteButton.addActionListener(new CopyCutPasteListener(symbolStorage, tabbedPane, document));
+        newFileButton.addActionListener(new NewFileListener(tabbedPane, document, symbolStorage));
+        boldButton.addActionListener(new BoldListener(document, tabbedPane, symbolStorage));
+        italicButton.addActionListener(new ItalicListener(document, tabbedPane, symbolStorage));
     }
 
 }

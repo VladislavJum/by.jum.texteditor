@@ -9,16 +9,15 @@ import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
 
 public class Caret extends JComponent {
-    private int caretPositionX1, caretPositionY1, caretPositionY2;
+    private int caretPositionX1 = 10;
+    private int caretPositionY1 = 5;
+    private int caretPositionY2 = 20;
     private boolean boolVisible;
+    private Timer timer;
 
     public Caret() {
-        caretPositionX1 = 10;
-        caretPositionY1 = 5;
-        caretPositionY2 = 20;
-
-        setBounds(10, 10, 3, caretPositionY2);
-        // setBorder(BorderFactory.createLineBorder(Color.BLUE));
+         setBounds(10, 10, 3, caretPositionY2);
+         //setBorder(BorderFactory.createLineBorder(Color.BLUE));
     }
 
     public void setCaretPosition(int caretPositionX1, int caretPositionY1, int caretPositionY2) {
@@ -32,17 +31,19 @@ public class Caret extends JComponent {
         return caretPositionX1;
     }
 
-    public void setCaretPositionX1(int caretPositionX1){
-        this.caretPositionX1 = caretPositionX1;
-    }
-
     public int getCaretPositionY1(){
         return caretPositionY1;
     }
 
+    public int getCaretPositionY2(){
+        return caretPositionY2;
+    }
+
+
+
     public void caretBlink() {
 
-        Timer timer = new Timer(500, new ActionListener() {
+        timer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 boolVisible=!boolVisible;
@@ -58,6 +59,16 @@ public class Caret extends JComponent {
         Graphics2D graphics2D = (Graphics2D) g;
         Line2D caret = new Line2D.Double(1, 0, 1, caretPositionY2);
         graphics2D.draw(caret);
+    }
+
+    public void caretDisable(){
+        boolVisible = true;
+        timer.stop();
+        repaint();
+    }
+
+    public void caretEnable(){
+        timer.start();
     }
 
 }
