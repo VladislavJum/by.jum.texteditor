@@ -2,7 +2,6 @@ package by.jum.texteditor.windows.symbol;
 
 import by.jum.texteditor.document.Document;
 import by.jum.texteditor.windows.Caret;
-import by.jum.texteditor.windows.CaretLocation;
 import by.jum.texteditor.windows.TextPane;
 
 import java.awt.Component;
@@ -14,7 +13,6 @@ import java.util.Set;
  */
 public class SelectionSymbol {
     public SelectionSymbol(SymbolStorage symbolStorage, Document document, TextPane myTextPane) {
-        CaretLocation caretLocation = new CaretLocation(myTextPane);
 
         Set<Symbol> selectoinSet = symbolStorage.getSelectoinSet();
         if (!selectoinSet.isEmpty()) {

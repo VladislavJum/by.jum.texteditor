@@ -1,5 +1,6 @@
 package by.jum.texteditor.windows;
 
+import by.jum.texteditor.XMLClass;
 import by.jum.texteditor.constants.MenuName;
 import by.jum.texteditor.constants.Path;
 import by.jum.texteditor.document.Document;
@@ -29,6 +30,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -36,6 +39,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 
 public class MainWindow {
@@ -139,7 +143,6 @@ public class MainWindow {
         mainMenu.add(editMenu);
         mainMenu.add(styleMenu);
 
-
         for (int nameIterator = 0; nameIterator < MenuName.NAME_STYLE.length; nameIterator++) {
             JMenuItem style = new JMenuItem(MenuName.NAME_STYLE[nameIterator]);
             fontMenu.add(style);
@@ -212,6 +215,23 @@ public class MainWindow {
         newFileButton.addActionListener(new NewFileListener(tabbedPane, document, symbolStorage));
         boldButton.addActionListener(new BoldListener(document, tabbedPane, symbolStorage));
         italicButton.addActionListener(new ItalicListener(document, tabbedPane, symbolStorage));
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    new XMLClass(symbolStorage).a();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (TransformerException e1) {
+                    e1.printStackTrace();
+                } catch (ParserConfigurationException e1) {
+                    e1.printStackTrace();
+                }
+
+            }
+
+        });
+
     }
 
 }

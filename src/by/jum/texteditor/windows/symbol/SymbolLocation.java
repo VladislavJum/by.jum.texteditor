@@ -68,6 +68,7 @@ public class SymbolLocation {
 
     void crossLine() {
         if (mySymbol.equals("\n")) {
+            System.out.println(mySymbol);
             newStringPosition = iteratorList;
            // symbolStorage.getEnterPositionList().add(newStringPosition);
             stepRow += maxSymbolHeight;
