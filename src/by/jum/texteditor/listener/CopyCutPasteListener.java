@@ -20,17 +20,18 @@ public class CopyCutPasteListener implements ActionListener {
     private Document document;
     private JTabbedPane tabbedPane;
 
-    public CopyCutPasteListener(SymbolStorage symbolStorage, JTabbedPane tabbedPane, Document document) {
-        this.symbolStorage = symbolStorage;
+    public CopyCutPasteListener(JTabbedPane tabbedPane, Document document) {
         this.document = document;
         this.tabbedPane = tabbedPane;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        textPane = (TextPane) tabbedPane.getSelectedComponent();
+        symbolStorage = textPane.getSymbolStorage();
         Set<Symbol> symbolSet = symbolStorage.getSelectoinSet();
         List<Symbol> copySymbolList = symbolStorage.getSymbolCopyList();
-        textPane = (TextPane) tabbedPane.getSelectedComponent();
+
         if (e.getActionCommand().equals(MenuName.COPY)) {
             copySymbolList.clear();
             Iterator<Symbol> iterator = symbolSet.iterator();

@@ -83,7 +83,6 @@ public class SymbolDelete {
                 lastSelectionSymbol = itr.next();
             }
             return true;
-
         } else {
             return false;
         }

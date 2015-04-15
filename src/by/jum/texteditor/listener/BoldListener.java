@@ -16,24 +16,24 @@ public class BoldListener implements ActionListener {
     private JTabbedPane tabbedPane;
     private SymbolStorage symbolStorage;
 
-    public BoldListener(Document document, JTabbedPane tabbedPane, SymbolStorage symbolStorage) {
+    public BoldListener(Document document, JTabbedPane tabbedPane) {
         this.document = document;
         this.tabbedPane = tabbedPane;
-        this.symbolStorage = symbolStorage;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
         JToggleButton toggleButton = (JToggleButton) e.getSource();
 
-        TextPane myTextPane = (TextPane) tabbedPane.getSelectedComponent();
-        myTextPane.requestFocusInWindow();
+        TextPane textPane = (TextPane) tabbedPane.getSelectedComponent();
+        textPane.requestFocusInWindow();
 
+        symbolStorage = textPane.getSymbolStorage();
         if (toggleButton.isSelected()) {
             document.setStyleSymbol(Font.BOLD);
         } else {
             document.setStyleSymbol(Font.PLAIN);
         }
 
-        new SelectionSymbol(symbolStorage, document, myTextPane);
+        new SelectionSymbol(symbolStorage, document, textPane);
     }
 }

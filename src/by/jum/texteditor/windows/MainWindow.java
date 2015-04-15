@@ -1,19 +1,19 @@
 package by.jum.texteditor.windows;
 
-import by.jum.texteditor.XMLClass;
 import by.jum.texteditor.constants.MenuName;
 import by.jum.texteditor.constants.Path;
 import by.jum.texteditor.document.Document;
 import by.jum.texteditor.listener.BoldListener;
 import by.jum.texteditor.listener.CloseListener;
 import by.jum.texteditor.listener.CopyCutPasteListener;
+import by.jum.texteditor.listener.FileChooserListener;
+import by.jum.texteditor.listener.FileSaveListener;
 import by.jum.texteditor.listener.ItalicListener;
 import by.jum.texteditor.listener.NewFileListener;
 import by.jum.texteditor.listener.SizeComboBoxListener;
 import by.jum.texteditor.listener.SizeMenuListener;
 import by.jum.texteditor.listener.StyleComboBoxListener;
 import by.jum.texteditor.listener.StyleMenuListener;
-import by.jum.texteditor.windows.symbol.SymbolStorage;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
@@ -30,8 +31,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -39,7 +38,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 
 
 public class MainWindow {
@@ -48,7 +46,7 @@ public class MainWindow {
     private JComboBox<Integer> sizeComboBox;
     private JTabbedPane tabbedPane;
     private Document document = new Document();
-    private SymbolStorage symbolStorage = new SymbolStorage();
+    private JButton newFileButton;
 
 
     public MainWindow() {
@@ -63,24 +61,32 @@ public class MainWindow {
         mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainWindow.setLocationRelativeTo(null);
 
+        tabbedPane = new JTabbedPane();
+        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+      //  tabbedPane.addChangeListener(new JTabbedPaneListener());
+
+        TextPaneCreator textPanel = new TextPaneCreator();
+        TextPane textPane = textPanel.createMyTextPane(document);
+
+        JScrollPane scrollPane = new JScrollPane(tabbedPane);
+        tabbedPane.add("untitled", textPane);
+        tabbedPane.setSelectedComponent(textPane);
+        tabbedPane.getSelectedComponent().requestFocusInWindow();
+
         styleComboBox = new JComboBox<String>(MenuName.NAME_STYLE);
         sizeComboBox = new JComboBox<Integer>(MenuName.SIZE_STYLE);
         sizeComboBox.setSelectedIndex(7);
         styleComboBox.setSelectedIndex(0);
 
-        tabbedPane = new JTabbedPane();
-        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
-        //tabbedPane.addChangeListener(new TabbedChangeListener(tabbedPane));
-
-        mainWindow.add(tabbedPane, BorderLayout.CENTER);
+        mainWindow.add(scrollPane, BorderLayout.CENTER);
 
         createItem();
         createToolBar();
 
         mainWindow.setVisible(true);
-        styleComboBox.addActionListener(new StyleComboBoxListener(tabbedPane, document, symbolStorage));
-        sizeComboBox.addActionListener(new SizeComboBoxListener(tabbedPane, document, symbolStorage));
+        styleComboBox.addActionListener(new StyleComboBoxListener(tabbedPane, document));
+        sizeComboBox.addActionListener(new SizeComboBoxListener(tabbedPane, document));
     }
 
     void createItem() {
@@ -124,6 +130,9 @@ public class MainWindow {
         cutEditItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
         pasteEditItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
 
+        saveAsFileItem.addActionListener(new FileSaveListener(tabbedPane));
+        openFileItem.addActionListener(new FileChooserListener(document, newFileButton, tabbedPane));
+
         editMenu.add(copyEditItem);
         //editMenu.add(cutEditItem);
         editMenu.add(pasteEditItem);
@@ -157,13 +166,13 @@ public class MainWindow {
 
         mainWindow.setJMenuBar(mainMenu);
 
-        CopyCutPasteListener copyCutPasteListener = new CopyCutPasteListener(symbolStorage, tabbedPane, document);
+        CopyCutPasteListener copyCutPasteListener = new CopyCutPasteListener(tabbedPane, document);
 
         copyEditItem.addActionListener(copyCutPasteListener);
         cutEditItem.addActionListener(copyCutPasteListener);
         pasteEditItem.addActionListener(copyCutPasteListener);
 
-        newFileItem.addActionListener(new NewFileListener(tabbedPane, document, symbolStorage));
+        newFileItem.addActionListener(new NewFileListener(tabbedPane, document));
         closeFileItem.addActionListener(new CloseListener(tabbedPane));
         exitFileItem.addActionListener(new ActionListener() {
             @Override
@@ -182,9 +191,9 @@ public class MainWindow {
         JToggleButton italicButton = new JToggleButton(new ImageIcon(Path.ITALIC_ICON.getPath()));
         JButton saveButton = new JButton(new ImageIcon(Path.SAVE_ICON.getPath()));
         JButton openFileButton = new JButton(new ImageIcon(Path.OPEN_ICON.getPath()));
-        JButton newFileButton = new JButton(new ImageIcon(Path.NEW_FILE_ICON.getPath()));
         JButton copyButton = new JButton(new ImageIcon(Path.COPY_ICON.getPath()));
         JButton pasteButton = new JButton(new ImageIcon(Path.PASTE_ICON.getPath()));
+        newFileButton = new JButton(new ImageIcon(Path.NEW_FILE_ICON.getPath()));
 
         copyButton.setActionCommand(MenuName.COPY);
         pasteButton.setActionCommand(MenuName.PASTE);
@@ -210,27 +219,14 @@ public class MainWindow {
         mainWindow.add(toolBar, BorderLayout.NORTH);
         mainWindow.setVisible(true);
 
-        copyButton.addActionListener(new CopyCutPasteListener(symbolStorage, tabbedPane, document));
-        pasteButton.addActionListener(new CopyCutPasteListener(symbolStorage, tabbedPane, document));
-        newFileButton.addActionListener(new NewFileListener(tabbedPane, document, symbolStorage));
-        boldButton.addActionListener(new BoldListener(document, tabbedPane, symbolStorage));
-        italicButton.addActionListener(new ItalicListener(document, tabbedPane, symbolStorage));
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    new XMLClass(symbolStorage).a();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                } catch (TransformerException e1) {
-                    e1.printStackTrace();
-                } catch (ParserConfigurationException e1) {
-                    e1.printStackTrace();
-                }
-
-            }
-
-        });
+        copyButton.addActionListener(new CopyCutPasteListener(tabbedPane, document));
+        pasteButton.addActionListener(new CopyCutPasteListener(tabbedPane, document));
+        newFileButton.addActionListener(new NewFileListener(tabbedPane, document));
+        boldButton.addActionListener(new BoldListener(document, tabbedPane));
+        italicButton.addActionListener(new ItalicListener(document, tabbedPane));
+        saveButton.addActionListener(new FileSaveListener(tabbedPane));
+        openFileButton.addActionListener(new FileChooserListener(document, newFileButton, tabbedPane));
+        tabbedPane.getSelectedComponent().requestFocusInWindow();
 
     }
 

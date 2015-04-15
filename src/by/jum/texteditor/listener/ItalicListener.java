@@ -16,18 +16,18 @@ public class ItalicListener implements ActionListener {
     private JTabbedPane tabbedPane;
     private SymbolStorage symbolStorage;
 
-    public ItalicListener(Document document, JTabbedPane tabbedPane, SymbolStorage symbolStorage) {
+    public ItalicListener(Document document, JTabbedPane tabbedPane) {
         this.document = document;
         this.tabbedPane = tabbedPane;
-        this.symbolStorage = symbolStorage;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         JToggleButton toggleButton = (JToggleButton) e.getSource();
 
-        TextPane myTextPane = (TextPane) tabbedPane.getSelectedComponent();
-        myTextPane.requestFocusInWindow();
+        TextPane myTextPtextPanene = (TextPane) tabbedPane.getSelectedComponent();
+        myTextPtextPanene.requestFocusInWindow();
+        symbolStorage = myTextPtextPanene.getSymbolStorage();
 
         if (toggleButton.isSelected()) {
             document.setStyleSymbol(Font.ITALIC);
@@ -35,6 +35,6 @@ public class ItalicListener implements ActionListener {
             document.setStyleSymbol(Font.PLAIN);
         }
 
-        new SelectionSymbol(symbolStorage, document, myTextPane);
+        new SelectionSymbol(symbolStorage, document, myTextPtextPanene);
     }
 }

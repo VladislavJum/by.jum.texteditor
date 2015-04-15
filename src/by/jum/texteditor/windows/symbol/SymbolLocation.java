@@ -22,10 +22,10 @@ public class SymbolLocation {
     private int newStringPosition = -1;
     private int iteratorList = 0;
 
-    public SymbolLocation(TextPane myTextPane, SymbolStorage symbolStorage) {
-        this.myTextPane = myTextPane;
+    public SymbolLocation(TextPane textPane, SymbolStorage symbolStorage) {
+        this.myTextPane = textPane;
         symbolList = symbolStorage.getSymbolList();
-        caret = myTextPane.getCaret();
+        caret = textPane.getCaret();
     }
 
     public void setCurrentSymbol(Symbol symbol) {
@@ -68,7 +68,6 @@ public class SymbolLocation {
 
     void crossLine() {
         if (mySymbol.equals("\n")) {
-            System.out.println(mySymbol);
             newStringPosition = iteratorList;
            // symbolStorage.getEnterPositionList().add(newStringPosition);
             stepRow += maxSymbolHeight;

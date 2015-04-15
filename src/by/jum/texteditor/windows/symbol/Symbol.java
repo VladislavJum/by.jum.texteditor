@@ -22,6 +22,7 @@ public class Symbol extends JPanel {
         //setBorder(BorderFactory.createLineBorder(Color.RED));
         setBackground(Color.white);
         setName("S");
+        font = document.getMyFont();
     }
 
     public void setFont(Font newFont) {

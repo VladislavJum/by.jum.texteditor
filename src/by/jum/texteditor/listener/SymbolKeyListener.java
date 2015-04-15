@@ -22,9 +22,10 @@ public class SymbolKeyListener implements KeyListener {
     private TextPane textPane;
     private SymbolStorage symbolStorage;
 
-    public SymbolKeyListener(TextPane textPane, Document document, SymbolStorage symbolStorage) {
+    public SymbolKeyListener(TextPane textPane, Document document) {
+     //   textPane = (TextPane) tabbedPane.getSelectedComponent();
         this.textPane = textPane;
-        this.symbolStorage = symbolStorage;
+        symbolStorage = textPane.getSymbolStorage();
         mySymbolCreator = new SymbolCreator(textPane, document, symbolStorage);
         caretLocation = new CaretLocation(textPane);
         symbolDelete = new SymbolDelete(textPane, symbolStorage);

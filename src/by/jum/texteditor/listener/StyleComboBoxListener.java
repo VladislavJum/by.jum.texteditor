@@ -15,10 +15,9 @@ public class StyleComboBoxListener implements ActionListener {
     private Document document;
     private SymbolStorage symbolStorage;
 
-    public StyleComboBoxListener(JTabbedPane tabbedPane, Document document, SymbolStorage symbolStorage) {
+    public StyleComboBoxListener(JTabbedPane tabbedPane, Document document) {
         this.tabbedPane = tabbedPane;
         this.document = document;
-        this.symbolStorage = symbolStorage;
     }
 
 
@@ -28,10 +27,12 @@ public class StyleComboBoxListener implements ActionListener {
         JComboBox comboBox = (JComboBox) e.getSource();
         String nameStyle = String.valueOf(comboBox.getSelectedItem());
 
-        TextPane myTextPane = (TextPane) tabbedPane.getSelectedComponent();
-        myTextPane.requestFocusInWindow();
+        TextPane textPane = (TextPane) tabbedPane.getSelectedComponent();
+        textPane.requestFocusInWindow();
+
+        symbolStorage = textPane.getSymbolStorage();
 
         document.setNameStyleSymbol(nameStyle);
-        new SelectionSymbol(symbolStorage, document, myTextPane);
+        new SelectionSymbol(symbolStorage, document, textPane);
     }
 }

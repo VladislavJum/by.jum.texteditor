@@ -15,10 +15,9 @@ public class SizeComboBoxListener implements ActionListener {
     private Document document;
     private SymbolStorage symbolStorage;
 
-    public SizeComboBoxListener(JTabbedPane tabbedPane, Document document, SymbolStorage symbolStorage) {
+    public SizeComboBoxListener(JTabbedPane tabbedPane, Document document) {
         this.tabbedPane = tabbedPane;
         this.document = document;
-        this.symbolStorage = symbolStorage;
     }
 
     @Override
@@ -26,10 +25,11 @@ public class SizeComboBoxListener implements ActionListener {
         JComboBox comboBox = (JComboBox) e.getSource();
         int newSize = (Integer) comboBox.getSelectedItem();
 
-        TextPane myTextPane = (TextPane) tabbedPane.getSelectedComponent();
+        TextPane textPane = (TextPane) tabbedPane.getSelectedComponent();
         document.setSizeSymbol(newSize);
-        myTextPane.requestFocusInWindow();
+        textPane.requestFocusInWindow();
+        symbolStorage = textPane.getSymbolStorage();
 
-        new SelectionSymbol(symbolStorage, document, myTextPane);
+        new SelectionSymbol(symbolStorage, document, textPane);
     }
 }

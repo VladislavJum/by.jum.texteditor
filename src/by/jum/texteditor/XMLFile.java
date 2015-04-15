@@ -1,12 +1,15 @@
 package by.jum.texteditor;
 
+import by.jum.texteditor.windows.TextPane;
 import by.jum.texteditor.windows.symbol.Symbol;
+import by.jum.texteditor.windows.symbol.SymbolCreator;
 import by.jum.texteditor.windows.symbol.SymbolStorage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.swing.JTabbedPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -21,20 +24,21 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
-/**
- * Created by Vlad on 11.04.2015.
- */
-public class XMLClass {
-    Element rootElement;
+public class XMLFile {
+    private Element rootElement;
     private SymbolStorage symbolStorage;
     private List<Symbol> list;
+    private String nameFile;
+    private TextPane textPane;
 
-    public XMLClass(SymbolStorage symbolStorage) {
-        this.symbolStorage = symbolStorage;
+    public XMLFile(String nameFile, JTabbedPane tabbedPane) {
+        this.nameFile = nameFile;
+        textPane = (TextPane) tabbedPane.getSelectedComponent();
+        symbolStorage = textPane.getSymbolStorage();
         list = symbolStorage.getSymbolList();
     }
 
-    public void a() throws IOException, TransformerException, ParserConfigurationException {
+    public void writeFile() throws IOException, TransformerException, ParserConfigurationException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = dbf.newDocumentBuilder();
         Document document = builder.newDocument();
@@ -65,38 +69,30 @@ public class XMLClass {
             outFormat.setProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperties(outFormat);
             DOMSource source = new DOMSource(document);
-            StreamResult result = new StreamResult(new File("foo2.xml"));
+            StreamResult result = new StreamResult(new File(nameFile));
             transformer.transform(source, result);
-
         }
-        c();
     }
 
 
-    void c() {
+    public void readFile(by.jum.texteditor.document.Document documentStyle) {
         try {
-            File xmlFile = new File("foo2.xml");
+            File xmlFile = new File(nameFile);
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             Document document = documentBuilder.parse(xmlFile);
             document.getDocumentElement().normalize();
 
-            System.out.println("Корневой элемент: " + document.getDocumentElement().getNodeName());
             NodeList nodeList = document.getElementsByTagName("symbol");
             for (int temp = 0; temp < nodeList.getLength(); temp++) {
-
                 Node nNode = nodeList.item(temp);
-
-                System.out.println("\nCurrent Element :" + nNode.getNodeName());
-
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-
                     Element eElement = (Element) nNode;
-
-                    System.out.println("nameSymbol : " + eElement.getAttribute("nameSymbol"));
-                    System.out.println("nameStyle : " + eElement.getElementsByTagName("nameStyle").item(0).getTextContent());
-                    System.out.println("sizeStyle : " + eElement.getElementsByTagName("sizeStyle").item(0).getTextContent());
-                    System.out.println("fontStyle : " + eElement.getElementsByTagName("fontStyle").item(0).getTextContent());
+                    documentStyle.setNameStyleSymbol(eElement.getElementsByTagName("nameStyle").item(0).getTextContent());
+                    documentStyle.setSizeSymbol(Integer.parseInt(eElement.getElementsByTagName("sizeStyle").item(0).getTextContent()));
+                    documentStyle.setStyleSymbol(Integer.parseInt(eElement.getElementsByTagName("fontStyle").item(0).getTextContent()));
+                    new SymbolCreator(textPane, documentStyle,
+                            symbolStorage).createSymbol(eElement.getAttribute("nameSymbol"));
                 }
             }
         } catch (Exception e) {

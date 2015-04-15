@@ -4,9 +4,6 @@ import javax.swing.JComboBox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by Vlad on 09.04.2015.
- */
 public class SizeMenuListener implements ActionListener{
     private JComboBox comboBox;
     private int size;
