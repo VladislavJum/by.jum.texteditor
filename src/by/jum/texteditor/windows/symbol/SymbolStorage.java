@@ -12,11 +12,11 @@ public class SymbolStorage {
     private List<Symbol> symbolCopyList = new ArrayList<Symbol>();
     private List<Symbol> copySymbolList = new ArrayList<Symbol>();
 
-
     public void clearAll() {
         symbolList.clear();
         selectoinSet.clear();
         symbolCopyList.clear();
+        copySymbolList.clear();
     }
 
     public Set getSelectoinSet() {
@@ -27,9 +27,8 @@ public class SymbolStorage {
         return symbolList;
     }
 
-    public List<Symbol> getSymbolCopyList(){
+    public List<Symbol> getSymbolCopyList() {
         return symbolCopyList;
     }
-
 
 }

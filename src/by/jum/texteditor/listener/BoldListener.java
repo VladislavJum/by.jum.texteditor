@@ -5,6 +5,7 @@ import by.jum.texteditor.windows.symbol.SelectionSymbol;
 import by.jum.texteditor.windows.symbol.SymbolStorage;
 import by.jum.texteditor.windows.TextPane;
 
+import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 import java.awt.Font;
@@ -15,10 +16,12 @@ public class BoldListener implements ActionListener {
     private Document document;
     private JTabbedPane tabbedPane;
     private SymbolStorage symbolStorage;
+    private JFrame frame;
 
-    public BoldListener(Document document, JTabbedPane tabbedPane) {
+    public BoldListener(Document document, JTabbedPane tabbedPane, JFrame frame) {
         this.document = document;
         this.tabbedPane = tabbedPane;
+        this.frame = frame;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -33,7 +36,6 @@ public class BoldListener implements ActionListener {
         } else {
             document.setStyleSymbol(Font.PLAIN);
         }
-
-        new SelectionSymbol(symbolStorage, document, textPane);
+        new SelectionSymbol(symbolStorage, document, textPane, frame);
     }
 }

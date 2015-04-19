@@ -9,6 +9,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -30,9 +31,11 @@ public class XMLFile {
     private List<Symbol> list;
     private String nameFile;
     private TextPane textPane;
+    private JFrame frame;
 
-    public XMLFile(String nameFile, JTabbedPane tabbedPane) {
+    public XMLFile(String nameFile, JTabbedPane tabbedPane, JFrame frame) {
         this.nameFile = nameFile;
+        this.frame = frame;
         textPane = (TextPane) tabbedPane.getSelectedComponent();
         symbolStorage = textPane.getSymbolStorage();
         list = symbolStorage.getSymbolList();
@@ -92,7 +95,7 @@ public class XMLFile {
                     documentStyle.setSizeSymbol(Integer.parseInt(eElement.getElementsByTagName("sizeStyle").item(0).getTextContent()));
                     documentStyle.setStyleSymbol(Integer.parseInt(eElement.getElementsByTagName("fontStyle").item(0).getTextContent()));
                     new SymbolCreator(textPane, documentStyle,
-                            symbolStorage).createSymbol(eElement.getAttribute("nameSymbol"));
+                            symbolStorage, frame).createSymbol(eElement.getAttribute("nameSymbol"));
                 }
             }
         } catch (Exception e) {

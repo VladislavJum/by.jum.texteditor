@@ -6,6 +6,7 @@ import by.jum.texteditor.windows.symbol.SymbolStorage;
 import by.jum.texteditor.windows.TextPane;
 
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,10 +15,12 @@ public class SizeComboBoxListener implements ActionListener {
     private JTabbedPane tabbedPane;
     private Document document;
     private SymbolStorage symbolStorage;
+    private JFrame frame;
 
-    public SizeComboBoxListener(JTabbedPane tabbedPane, Document document) {
+    public SizeComboBoxListener(JTabbedPane tabbedPane, Document document, JFrame frame) {
         this.tabbedPane = tabbedPane;
         this.document = document;
+        this.frame = frame;
     }
 
     @Override
@@ -30,6 +33,6 @@ public class SizeComboBoxListener implements ActionListener {
         textPane.requestFocusInWindow();
         symbolStorage = textPane.getSymbolStorage();
 
-        new SelectionSymbol(symbolStorage, document, textPane);
+        new SelectionSymbol(symbolStorage, document, textPane, frame);
     }
 }

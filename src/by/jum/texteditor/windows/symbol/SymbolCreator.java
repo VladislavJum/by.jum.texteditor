@@ -4,6 +4,7 @@ import by.jum.texteditor.document.Document;
 import by.jum.texteditor.windows.Caret;
 import by.jum.texteditor.windows.TextPane;
 
+import javax.swing.JFrame;
 import java.awt.Component;
 import java.util.Iterator;
 import java.util.List;
@@ -14,11 +15,13 @@ public class SymbolCreator {
     private SymbolStorage symbolStorage;
     private Document document;
     private Symbol symbol;
+    private JFrame frame;
 
-    public SymbolCreator(TextPane textPane, Document document, SymbolStorage symbolStorage) {
+    public SymbolCreator(TextPane textPane, Document document, SymbolStorage symbolStorage, JFrame frame) {
         this.textPane = textPane;
         this.document = document;
         this.symbolStorage = symbolStorage;
+        this.frame = frame;
     }
 
     public void createSymbol(String symbolString) {
@@ -35,14 +38,18 @@ public class SymbolCreator {
         symbol = new Symbol(symbolString, document);
 
         addSymbol();
+        SymbolLocation symbolLocation = new SymbolLocation(textPane, symbolStorage, frame);
 
-        SymbolLocation symbolLocation = new SymbolLocation(textPane, symbolStorage);
 
         symbolLocation.setCurrentSymbol(symbol);
         symbolLocation.symbolLocate();
+
+
+       /* symbolLocation.setCurrentSymbol(symbol);
+        symbolLocation.symbolLocate();*/
     }
 
-    void addSymbol(){
+    void addSymbol() {
         List<Symbol> symbolList = symbolStorage.getSymbolList();
         Caret caret = textPane.getCaret();
 
@@ -65,7 +72,6 @@ public class SymbolCreator {
 
         textPane.add(symbol);
     }
-
 
 
 }

@@ -3,13 +3,16 @@ package by.jum.texteditor.windows.symbol;
 import by.jum.texteditor.windows.Caret;
 import by.jum.texteditor.windows.TextPane;
 
+import javax.swing.JFrame;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.util.List;
 
 public class SymbolLocation {
     private String mySymbol;
+    private JFrame frame;
     private Caret caret;
-    private TextPane myTextPane;
+    private TextPane textPane;
     private Symbol symbol;
     private List<Symbol> symbolList;
 
@@ -21,19 +24,22 @@ public class SymbolLocation {
     private int maxSymbolHeight = 0, indentHeight = 0;
     private int newStringPosition = -1;
     private int iteratorList = 0;
+    private int size = 200;
 
-    public SymbolLocation(TextPane textPane, SymbolStorage symbolStorage) {
-        this.myTextPane = textPane;
+    public SymbolLocation(TextPane textPane, SymbolStorage symbolStorage, JFrame frame) {
+        this.textPane = textPane;
+        this.frame = frame;
         symbolList = symbolStorage.getSymbolList();
         caret = textPane.getCaret();
     }
+
 
     public void setCurrentSymbol(Symbol symbol) {
         this.symbol = symbol;
     }
 
     public void symbolLocate() {
-        caret = myTextPane.getCaret();
+        caret = textPane.getCaret();
         for (; iteratorList < symbolList.size(); iteratorList++) {
             Symbol symbol = symbolList.get(iteratorList);
             mySymbol = symbol.getSymbol();
@@ -43,6 +49,15 @@ public class SymbolLocation {
             symbolWight = getWightSymbol(symbol);
             symbolHeight = 4 + (int) symbol.getDocument().getSize2D();
             stepColumn = caretPosition;
+
+            if (caretPosition > frame.getSize().width - 50) {
+                caretPosition = 10;
+                stepRow += maxSymbolHeight;
+                stepColumn = 10;
+                size += maxSymbolHeight;
+                textPane.setPreferredSize(new Dimension(0, size));
+                textPane.updateUI();
+            }
 
             alignHeightDown();
 
@@ -68,11 +83,14 @@ public class SymbolLocation {
 
     void crossLine() {
         if (mySymbol.equals("\n")) {
+            size += maxSymbolHeight;
+            textPane.setPreferredSize(new Dimension(0, size));
             newStringPosition = iteratorList;
-           // symbolStorage.getEnterPositionList().add(newStringPosition);
+            // symbolStorage.getEnterPositionList().add(newStringPosition);
             stepRow += maxSymbolHeight;
             maxSymbolHeight = symbolHeight;
             caretPosition = 10;
+            textPane.updateUI();
         }
     }
 

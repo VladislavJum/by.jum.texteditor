@@ -4,6 +4,7 @@ import by.jum.texteditor.document.Document;
 import by.jum.texteditor.windows.Caret;
 import by.jum.texteditor.windows.TextPane;
 
+import javax.swing.JFrame;
 import java.awt.Component;
 import java.util.Iterator;
 import java.util.Set;
@@ -12,7 +13,7 @@ import java.util.Set;
  * Created by Vlad on 03.04.2015.
  */
 public class SelectionSymbol {
-    public SelectionSymbol(SymbolStorage symbolStorage, Document document, TextPane myTextPane) {
+    public SelectionSymbol(SymbolStorage symbolStorage, Document document, TextPane myTextPane, JFrame frame) {
 
         Set<Symbol> selectoinSet = symbolStorage.getSelectoinSet();
         if (!selectoinSet.isEmpty()) {
@@ -21,7 +22,7 @@ public class SelectionSymbol {
                 itr.next().setFont(document.getMyFont());
             }
 
-            new SymbolLocation(myTextPane, symbolStorage).symbolLocate();
+            new SymbolLocation(myTextPane, symbolStorage, frame).symbolLocate();
 
             //перемещение каретки при изменении стилей
             Caret caret = myTextPane.getCaret();
@@ -33,6 +34,6 @@ public class SelectionSymbol {
                         symbol.getSymbolPositionY1(), symbol.getSymbolHeight());
             }
 
-            }
+        }
     }
 }

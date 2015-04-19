@@ -8,6 +8,7 @@ import by.jum.texteditor.windows.symbol.SymbolCreator;
 import by.jum.texteditor.windows.symbol.SymbolDelete;
 import by.jum.texteditor.windows.symbol.SymbolStorage;
 
+import javax.swing.JFrame;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -22,13 +23,13 @@ public class SymbolKeyListener implements KeyListener {
     private TextPane textPane;
     private SymbolStorage symbolStorage;
 
-    public SymbolKeyListener(TextPane textPane, Document document) {
+    public SymbolKeyListener(TextPane textPane, Document document, JFrame frame) {
      //   textPane = (TextPane) tabbedPane.getSelectedComponent();
         this.textPane = textPane;
         symbolStorage = textPane.getSymbolStorage();
-        mySymbolCreator = new SymbolCreator(textPane, document, symbolStorage);
+        mySymbolCreator = new SymbolCreator(textPane, document, symbolStorage, frame);
         caretLocation = new CaretLocation(textPane);
-        symbolDelete = new SymbolDelete(textPane, symbolStorage);
+        symbolDelete = new SymbolDelete(textPane, symbolStorage, frame);
 
     }
 

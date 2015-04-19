@@ -3,6 +3,7 @@ package by.jum.texteditor.listener;
 import by.jum.texteditor.XMLFile;
 
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -16,9 +17,11 @@ import java.io.IOException;
 public class FileSaveListener implements ActionListener {
     private JFileChooser jFileChooser;
     private JTabbedPane tabbedPane;
+    private JFrame frame;
 
-    public FileSaveListener(JTabbedPane tabbedPane) {
+    public FileSaveListener(JTabbedPane tabbedPane, JFrame frame) {
         this.tabbedPane = tabbedPane;
+        this.frame = frame;
         jFileChooser = new JFileChooser();
 
     }
@@ -26,9 +29,8 @@ public class FileSaveListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if ( jFileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION ) {
-
                 try {
-                    new XMLFile(jFileChooser.getSelectedFile().getPath(), tabbedPane).writeFile();
+                    new XMLFile(jFileChooser.getSelectedFile().getPath(), tabbedPane, frame).writeFile();
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 } catch (TransformerException e1) {

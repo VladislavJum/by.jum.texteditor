@@ -4,6 +4,7 @@ import by.jum.texteditor.windows.Caret;
 import by.jum.texteditor.windows.CaretLocation;
 import by.jum.texteditor.windows.TextPane;
 
+import javax.swing.JFrame;
 import java.awt.Component;
 import java.util.Iterator;
 import java.util.List;
@@ -16,10 +17,12 @@ public class SymbolDelete {
     private List<Symbol> symbolList;
     private Symbol firstSelectionSymbol;
     private Symbol lastSelectionSymbol;
+    private JFrame frame;
 
-    public SymbolDelete(TextPane textPane, SymbolStorage symbolStorage) {
+    public SymbolDelete(TextPane textPane, SymbolStorage symbolStorage, JFrame frame) {
         this.textPane = textPane;
         this.symbolStorage = symbolStorage;
+        this.frame = frame;
         selectionSet = symbolStorage.getSelectoinSet();
         symbolList = symbolStorage.getSymbolList();
     }
@@ -29,7 +32,7 @@ public class SymbolDelete {
             deleteSelection();
         } else {
             Caret caret = textPane.getCaret();
-            if(firstSelectionSymbol != null) {
+            if (firstSelectionSymbol != null) {
                 caret.setCaretPosition(firstSelectionSymbol.getSymbolPositionX1() + firstSelectionSymbol.getSymbolWidth(),
                         firstSelectionSymbol.getSymbolPositionY1(), firstSelectionSymbol.getSymbolHeight());
                 selectionSet.clear();
@@ -39,7 +42,7 @@ public class SymbolDelete {
             if (symbol != null) {
                 symbolList.remove(symbol);
                 textPane.remove(symbol);
-                new SymbolLocation(textPane, symbolStorage).symbolLocate();
+                new SymbolLocation(textPane, symbolStorage, frame).symbolLocate();
                 textPane.updateUI();
             }
             caret.caretEnable();
@@ -51,7 +54,7 @@ public class SymbolDelete {
             deleteSelection();
         } else {
             Caret caret = textPane.getCaret();
-            if(firstSelectionSymbol != null) {
+            if (firstSelectionSymbol != null) {
                 caret.setCaretPosition(firstSelectionSymbol.getSymbolPositionX1(),
                         firstSelectionSymbol.getSymbolPositionY1(), firstSelectionSymbol.getSymbolHeight());
                 selectionSet.clear();
@@ -62,7 +65,7 @@ public class SymbolDelete {
                 Symbol symbol = (Symbol) component;
                 symbolList.remove(symbol);
                 textPane.remove(symbol);
-                new SymbolLocation(textPane, symbolStorage).symbolLocate();
+                new SymbolLocation(textPane, symbolStorage, frame).symbolLocate();
                 textPane.updateUI();
             }
             caret.caretEnable();
@@ -110,7 +113,7 @@ public class SymbolDelete {
         }
         selectionSet.clear();
 
-        new SymbolLocation(textPane, symbolStorage).symbolLocate();
+        new SymbolLocation(textPane, symbolStorage, frame).symbolLocate();
         textPane.updateUI();
         caret.caretEnable();
     }

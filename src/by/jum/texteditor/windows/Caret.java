@@ -16,8 +16,8 @@ public class Caret extends JComponent {
     private Timer timer;
 
     public Caret() {
-         setBounds(10, 10, 3, caretPositionY2);
-         //setBorder(BorderFactory.createLineBorder(Color.BLUE));
+        setBounds(10, 10, 3, caretPositionY2);
+        //setBorder(BorderFactory.createLineBorder(Color.BLUE));
     }
 
     public void setCaretPosition(int caretPositionX1, int caretPositionY1, int caretPositionY2) {
@@ -27,18 +27,17 @@ public class Caret extends JComponent {
         setBounds(caretPositionX1, caretPositionY1, 3, caretPositionY2);
     }
 
-    public int getCaretPositionX1(){
+    public int getCaretPositionX1() {
         return caretPositionX1;
     }
 
-    public int getCaretPositionY1(){
+    public int getCaretPositionY1() {
         return caretPositionY1;
     }
 
-    public int getCaretPositionY2(){
+    public int getCaretPositionY2() {
         return caretPositionY2;
     }
-
 
 
     public void caretBlink() {
@@ -46,7 +45,7 @@ public class Caret extends JComponent {
         timer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolVisible=!boolVisible;
+                boolVisible = !boolVisible;
                 repaint();
             }
         });
@@ -61,13 +60,13 @@ public class Caret extends JComponent {
         graphics2D.draw(caret);
     }
 
-    public void caretDisable(){
+    public void caretDisable() {
         boolVisible = true;
         timer.stop();
         repaint();
     }
 
-    public void caretEnable(){
+    public void caretEnable() {
         timer.start();
     }
 

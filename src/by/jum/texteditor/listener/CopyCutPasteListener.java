@@ -7,6 +7,7 @@ import by.jum.texteditor.windows.symbol.Symbol;
 import by.jum.texteditor.windows.symbol.SymbolCreator;
 import by.jum.texteditor.windows.symbol.SymbolStorage;
 
+import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,10 +20,12 @@ public class CopyCutPasteListener implements ActionListener {
     private TextPane textPane;
     private Document document;
     private JTabbedPane tabbedPane;
+    private JFrame frame;
 
-    public CopyCutPasteListener(JTabbedPane tabbedPane, Document document) {
+    public CopyCutPasteListener(JTabbedPane tabbedPane, Document document, JFrame frame) {
         this.document = document;
         this.tabbedPane = tabbedPane;
+        this.frame = frame;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class CopyCutPasteListener implements ActionListener {
                 textPane.requestFocusInWindow();
             }
         } else {
-            SymbolCreator symbolCreator = new SymbolCreator(textPane, document, symbolStorage);
+            SymbolCreator symbolCreator = new SymbolCreator(textPane, document, symbolStorage, frame);
             for (Symbol symbol : copySymbolList) {
                 symbolCreator.createSymbol(symbol.getSymbol());
                 textPane.requestFocusInWindow();

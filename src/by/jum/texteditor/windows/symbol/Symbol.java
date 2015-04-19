@@ -8,7 +8,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-public class Symbol extends JPanel {
+public class Symbol extends JPanel implements Cloneable {
     private String mySymbol;
     private Font font;
     private int symbolPositionY1;
@@ -30,7 +30,7 @@ public class Symbol extends JPanel {
         repaint();
     }
 
-    public Font getDocument(){
+    public Font getDocument() {
         return font;
     }
 
@@ -52,24 +52,28 @@ public class Symbol extends JPanel {
         symbolWidth = width;
     }
 
-    public int getSymbolPositionY1(){
+    public int getSymbolPositionY1() {
         return symbolPositionY1;
     }
 
-    public int getSymbolPositionX1(){
+    public int getSymbolPositionX1() {
         return symbolPositionX1;
     }
 
-    public int getSymbolHeight(){
+    public int getSymbolHeight() {
         return symbolHeight;
     }
 
-    public int getSymbolWidth(){
+    public int getSymbolWidth() {
         return symbolWidth;
     }
 
-    public String getSymbol(){
+    public String getSymbol() {
         return mySymbol;
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return (Symbol) super.clone();
+    }
 }

@@ -13,8 +13,6 @@ public class SizeMenuListener implements ActionListener{
         this.size = size;
     }
 
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         comboBox.setSelectedItem(size);
