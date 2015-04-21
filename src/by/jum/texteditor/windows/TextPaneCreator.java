@@ -29,7 +29,6 @@ public class TextPaneCreator {
                 new SymbolLocation(textPane, textPane.getSymbolStorage(), frame).symbolLocate();
             }
         });
-        //tabbedPane.setTitleAt(tabbedPane.getSelectedIndex(), "fg");
         return textPane;
     }
 }

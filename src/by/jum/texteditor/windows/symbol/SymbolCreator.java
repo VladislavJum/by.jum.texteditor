@@ -17,6 +17,7 @@ public class SymbolCreator {
     private Symbol symbol;
     private JFrame frame;
 
+
     public SymbolCreator(TextPane textPane, Document document, SymbolStorage symbolStorage, JFrame frame) {
         this.textPane = textPane;
         this.document = document;
@@ -36,6 +37,7 @@ public class SymbolCreator {
         symbolStorage.getSelectoinSet().clear();
 
         symbol = new Symbol(symbolString, document);
+        textPane.add(symbol);
 
         addSymbol();
         SymbolLocation symbolLocation = new SymbolLocation(textPane, symbolStorage, frame);
@@ -70,7 +72,7 @@ public class SymbolCreator {
             }
         }
 
-        textPane.add(symbol);
+        //textPane.add(symbol);
     }
 
 

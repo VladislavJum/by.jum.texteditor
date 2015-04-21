@@ -1,6 +1,6 @@
 package by.jum.texteditor.listener;
 
-import by.jum.texteditor.XMLFile;
+import by.jum.texteditor.file.XMLFile;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;

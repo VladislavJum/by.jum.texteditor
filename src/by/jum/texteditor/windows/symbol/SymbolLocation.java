@@ -21,7 +21,8 @@ public class SymbolLocation {
     private int stepRow = 10;
     private int symbolWight;
     private int symbolHeight = 0;
-    private int maxSymbolHeight = 0, indentHeight = 0;
+    private int maxSymbolHeight = 0;
+    private int indentHeight = 0;
     private int newStringPosition = -1;
     private int iteratorList = 0;
     private int size = 200;
@@ -64,7 +65,7 @@ public class SymbolLocation {
             symbol.setBounds(stepColumn, stepRow + indentHeight, symbolWight, symbolHeight);
             caretPosition = stepColumn + symbolWight;
 
-            if (symbol.equals(this.symbol) && symbol != null) {
+            if (symbol != null && symbol.equals(this.symbol)) {
                 caret.setCaretPosition(caretPosition, stepRow + indentHeight, symbolHeight);
             }
         }

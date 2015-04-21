@@ -1,4 +1,4 @@
-package by.jum.texteditor;
+package by.jum.texteditor.file;
 
 import by.jum.texteditor.document.Document;
 import by.jum.texteditor.windows.TextPane;

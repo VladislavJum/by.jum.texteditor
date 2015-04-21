@@ -33,9 +33,7 @@ import javax.swing.WindowConstants;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -56,14 +54,11 @@ public class MainWindow {
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         mainWindow = new JFrame(MenuName.TITLE);
-        mainWindow.setSize(screenSize);
+        mainWindow.setSize(800, 600);
         mainWindow.setLayout(new BorderLayout());
         mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainWindow.setLocationRelativeTo(null);
-
-        //Dimension frameSize = mainWindow.getPreferredSize();
 
         tabbedPane = new JTabbedPane();
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -73,9 +68,6 @@ public class MainWindow {
 
         JScrollPane scrollPane = new JScrollPane(tabbedPane);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        //scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        // scrollPane.getVerticalScrollBar().setUnitIncrement(15);
-        // scrollPane.getHorizontalScrollBar().setUnitIncrement(15);
 
         tabbedPane.add("untitled", textPane);
         tabbedPane.setSelectedComponent(textPane);

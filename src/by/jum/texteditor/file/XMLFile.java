@@ -1,5 +1,6 @@
-package by.jum.texteditor;
+package by.jum.texteditor.file;
 
+import by.jum.texteditor.constants.XMLTag;
 import by.jum.texteditor.windows.TextPane;
 import by.jum.texteditor.windows.symbol.Symbol;
 import by.jum.texteditor.windows.symbol.SymbolCreator;
@@ -46,25 +47,28 @@ public class XMLFile {
         DocumentBuilder builder = dbf.newDocumentBuilder();
         Document document = builder.newDocument();
 
-        rootElement = document.createElement("symbols");
+        rootElement = document.createElement(XMLTag.SYMBOLS);
         document.appendChild(rootElement);
 
         for (Symbol s : list) {
-            Element symbol = document.createElement("symbol");
+            Element symbol = document.createElement(XMLTag.SYMBOL);
             rootElement.appendChild(symbol);
-            symbol.setAttribute("nameSymbol", s.getSymbol());
+            symbol.setAttribute(XMLTag.SYMBOLNAME, s.getSymbol());
 
-            Element nameStyle = document.createElement("nameStyle");
+            Element style = document.createElement(XMLTag.STYLE);
+            symbol.appendChild(style);
+
+            Element nameStyle = document.createElement(XMLTag.FONTNAME);
             nameStyle.appendChild(document.createTextNode(s.getDocument().getFamily()));
-            symbol.appendChild(nameStyle);
+            style.appendChild(nameStyle);
 
-            Element sizeStyle = document.createElement("sizeStyle");
+            Element sizeStyle = document.createElement(XMLTag.FONTSIZE);
             sizeStyle.appendChild(document.createTextNode(String.valueOf(s.getDocument().getSize())));
-            symbol.appendChild(sizeStyle);
+            style.appendChild(sizeStyle);
 
-            Element fontStyle = document.createElement("fontStyle");
+            Element fontStyle = document.createElement(XMLTag.FONTTYPE);
             fontStyle.appendChild(document.createTextNode(String.valueOf(s.getDocument().getStyle())));
-            symbol.appendChild(fontStyle);
+            style.appendChild(fontStyle);
 
             TransformerFactory factory = TransformerFactory.newInstance();
             Transformer transformer = factory.newTransformer();
@@ -86,16 +90,16 @@ public class XMLFile {
             Document document = documentBuilder.parse(xmlFile);
             document.getDocumentElement().normalize();
 
-            NodeList nodeList = document.getElementsByTagName("symbol");
+            NodeList nodeList = document.getElementsByTagName(XMLTag.SYMBOL);
             for (int temp = 0; temp < nodeList.getLength(); temp++) {
                 Node nNode = nodeList.item(temp);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
-                    documentStyle.setNameStyleSymbol(eElement.getElementsByTagName("nameStyle").item(0).getTextContent());
-                    documentStyle.setSizeSymbol(Integer.parseInt(eElement.getElementsByTagName("sizeStyle").item(0).getTextContent()));
-                    documentStyle.setStyleSymbol(Integer.parseInt(eElement.getElementsByTagName("fontStyle").item(0).getTextContent()));
+                    documentStyle.setNameStyleSymbol(eElement.getElementsByTagName(XMLTag.FONTNAME).item(0).getTextContent());
+                    documentStyle.setSizeSymbol(Integer.parseInt(eElement.getElementsByTagName(XMLTag.FONTSIZE).item(0).getTextContent()));
+                    documentStyle.setStyleSymbol(Integer.parseInt(eElement.getElementsByTagName(XMLTag.FONTTYPE).item(0).getTextContent()));
                     new SymbolCreator(textPane, documentStyle,
-                            symbolStorage, frame).createSymbol(eElement.getAttribute("nameSymbol"));
+                            symbolStorage, frame).createSymbol(eElement.getAttribute(XMLTag.SYMBOLNAME));
                 }
             }
         } catch (Exception e) {
